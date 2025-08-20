@@ -28,6 +28,7 @@ android {
 
 dependencies {
     implementation(libs.bundles.nextftc)
+    implementation(libs.pedro)
     compileOnly(libs.bundles.ftc)
 
     testImplementation(libs.bundles.kotest)
