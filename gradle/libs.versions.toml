@@ -1,6 +1,9 @@
 [versions]
-kotlin = "2.1.20"
+kotlin = "2.0.0"
+android = "8.7.3"
+nextftc = "1.0.0-SNAPSHOT"
 kotest = "5.9.1"
+ftc = "10.3.0"
 
 [libraries]
 kotest-runner = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
@@ -8,10 +11,21 @@ kotest-assertations = { module = "io.kotest:kotest-assertions-core", version.ref
 kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
 mockk = { module = "io.mockk:mockk", version = "1.14.2" } # if needed
 functional-interfaces = { module = "dev.nextftc:functional-interfaces", version = "1.0.1" } # if needed
+ftc-robot-core = { group = "org.firstinspires.ftc", name = "RobotCore", version.ref = "ftc" }
+ftc-hardware = { group = "org.firstinspires.ftc", name = "Hardware", version.ref = "ftc" }
+ftc-common = { group = "org.firstinspires.ftc", name = "FtcCommon", version.ref = "ftc" }
+nextftc-core = { group = "dev.nextftc", name = "core", version.ref = "nextftc" }
+nextftc-ftc = { group = "dev.nextftc", name = "ftc", version.ref = "nextftc" }
+nextftc-hardware = { group = "dev.nextftc", name = "hardware", version.ref = "nextftc" }
 
 [bundles]
 kotest = ["kotest-runner", "kotest-assertations", "kotest-property"]
+ftc = ["ftc-robot-core", "ftc-hardware", "ftc-common"]
+nextftc = ["nextftc-core", "nextftc-ftc", "nextftc-hardware"]
 
 [plugins]
-deployer = { id = "io.deepmedia.tools.deployer", version = "0.18.0" }
-dokka = { id = "org.jetbrains.dokka", version = "2.0.0" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+android-library = { id = "com.android.library", version.ref = "android" }
+nextftc-publishing = { id = "dev.nextftc.publishing.multi-module", version = "1.0.1" }
+dokka = { id = "org.jetbrains.dokka", version.ref = "kotlin" }

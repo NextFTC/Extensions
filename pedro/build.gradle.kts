@@ -27,9 +27,11 @@ android {
 }
 
 dependencies {
-    implementation(project(":core"))
-    implementation(project(":ftc"))
+    implementation(libs.bundles.nextftc)
     compileOnly(libs.bundles.ftc)
+
+    testImplementation(libs.bundles.kotest)
+    testImplementation(libs.mockk)
 }
 
 description =
