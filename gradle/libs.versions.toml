@@ -4,7 +4,7 @@ android = "8.7.3"
 nextftc = "1.0.0-SNAPSHOT"
 kotest = "5.9.1"
 ftc = "10.3.0"
-pedro = "1.1.0-SNAPSHOT"
+pedro = "2.0.0"
 
 [libraries]
 kotest-runner = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
@@ -15,7 +15,6 @@ functional-interfaces = { module = "dev.nextftc:functional-interfaces", version 
 ftc-robot-core = { group = "org.firstinspires.ftc", name = "RobotCore", version.ref = "ftc" }
 ftc-hardware = { group = "org.firstinspires.ftc", name = "Hardware", version.ref = "ftc" }
 ftc-common = { group = "org.firstinspires.ftc", name = "FtcCommon", version.ref = "ftc" }
-nextftc-core = { group = "dev.nextftc", name = "core", version.ref = "nextftc" }
 nextftc-ftc = { group = "dev.nextftc", name = "ftc", version.ref = "nextftc" }
 nextftc-hardware = { group = "dev.nextftc", name = "hardware", version.ref = "nextftc" }
 pedro = { module = "com.pedropathing:ftc", version.ref = "pedro" }
@@ -23,7 +22,7 @@ pedro = { module = "com.pedropathing:ftc", version.ref = "pedro" }
 [bundles]
 kotest = ["kotest-runner", "kotest-assertations", "kotest-property"]
 ftc = ["ftc-robot-core", "ftc-hardware", "ftc-common"]
-nextftc = ["nextftc-core", "nextftc-ftc", "nextftc-hardware"]
+nextftc = ["nextftc-ftc", "nextftc-hardware"]
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
