@@ -5,7 +5,10 @@ package dev.nextftc.extensions.pedro
 import com.pedropathing.follower.Follower
 import com.qualcomm.robotcore.hardware.HardwareMap
 import dev.nextftc.core.components.Component
+import dev.nextftc.core.units.Angle
+import dev.nextftc.core.units.rad
 import dev.nextftc.ftc.ActiveOpMode
+import java.util.function.Supplier
 
 class PedroComponent(private val followerFactory: (hardwareMap: HardwareMap) -> Follower) : Component {
     override fun preInit() {
@@ -17,6 +20,12 @@ class PedroComponent(private val followerFactory: (hardwareMap: HardwareMap) -> 
 
     override fun postStop() {
         _follower = null
+    }
+
+    companion object {
+        @get:JvmName("gyro")
+        @JvmStatic
+        val gyro: Supplier<Angle> = Supplier { follower.totalHeading.rad.normalized }
     }
 }
 
