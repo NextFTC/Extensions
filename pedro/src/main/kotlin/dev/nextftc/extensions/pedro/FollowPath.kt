@@ -3,6 +3,7 @@ package dev.nextftc.extensions.pedro
 import com.pedropathing.paths.Path
 import com.pedropathing.paths.PathChain
 import dev.nextftc.core.commands.Command
+import dev.nextftc.extensions.pedro.PedroComponent.follower
 
 class FollowPath @JvmOverloads constructor(
     private val path: PathChain,

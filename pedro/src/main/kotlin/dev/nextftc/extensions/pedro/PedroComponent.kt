@@ -10,10 +10,20 @@ import dev.nextftc.core.units.rad
 import dev.nextftc.ftc.ActiveOpMode
 import java.util.function.Supplier
 
-class PedroComponent(private val followerFactory: (hardwareMap: HardwareMap) -> Follower) : Component {
-    override fun preInit() {
-        _follower = followerFactory(ActiveOpMode.hardwareMap)
-    }
+object PedroComponent : Component {
+
+    private var _follower: Follower? = null
+
+    @get:JvmName("follower")
+    @JvmStatic
+    val follower: Follower
+        get() = _follower ?: error("Follower not initialized! Make sure you added PedroComponent to your OpMode.")
+
+    @JvmStatic
+    fun withFollower(follower: Follower) = apply { _follower = follower }
+
+    @JvmStatic
+    fun withFollower(followerFactory: (HardwareMap) -> Follower) = withFollower(followerFactory(ActiveOpMode.hardwareMap))
 
     override fun preWaitForStart() = follower.update()
     override fun preUpdate() = follower.update()
@@ -22,15 +32,7 @@ class PedroComponent(private val followerFactory: (hardwareMap: HardwareMap) -> 
         _follower = null
     }
 
-    companion object {
-        @get:JvmName("gyro")
-        @JvmStatic
-        val gyro: Supplier<Angle> = Supplier { follower.totalHeading.rad.normalized }
-    }
+    @get:JvmName("gyro")
+    @JvmStatic
+    val gyro: Supplier<Angle> = Supplier { follower.totalHeading.rad.normalized }
 }
-
-private var _follower: Follower? = null
-
-@get:JvmName("follower")
-val follower: Follower
-    get() = _follower ?: error("Follower not initialized! Make sure you added PedroComponent to your OpMode.")

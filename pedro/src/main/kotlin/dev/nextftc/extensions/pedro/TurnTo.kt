@@ -2,6 +2,7 @@ package dev.nextftc.extensions.pedro
 
 import dev.nextftc.core.commands.Command
 import dev.nextftc.core.units.Angle
+import dev.nextftc.extensions.pedro.PedroComponent.follower
 
 class TurnTo(private val angle: Angle) : Command() {
 
