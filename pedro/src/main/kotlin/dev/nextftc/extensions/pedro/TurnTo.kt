@@ -5,6 +5,10 @@ import dev.nextftc.core.units.Angle
 
 class TurnTo(private val angle: Angle) : Command() {
 
+    init {
+        named("TurnTo($angle)")
+    }
+
     override val isDone: Boolean
         get() = !follower.isTurning
 
