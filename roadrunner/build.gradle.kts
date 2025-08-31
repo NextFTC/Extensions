@@ -38,4 +38,5 @@ description =
 nextFTCPublishing {
     displayName = "NextFTC Extensions - RoadRunner"
     logoPath = "../assets/logo-icon.svg"
+    version = property("versions.roadrunner") as String
 }
