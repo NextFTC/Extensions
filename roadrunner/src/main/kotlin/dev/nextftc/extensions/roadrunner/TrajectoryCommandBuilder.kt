@@ -23,6 +23,8 @@ import dev.nextftc.core.commands.delays.Delay
 import dev.nextftc.core.commands.groups.ParallelGroup
 import dev.nextftc.core.commands.utility.InstantCommand
 import dev.nextftc.core.commands.utility.NullCommand
+import kotlin.time.Duration
+import kotlin.time.DurationUnit
 
 /**
  * Builder that combines trajectories, turns, and other actions.
@@ -169,12 +171,12 @@ class TrajectoryCommandBuilder private constructor(
         }
 
     /**
-     * Stops the current trajectory (like [endTrajectory]) and adds action [a] next.
+     * Stops the current trajectory (like [endTrajectory]) and adds command [command] next.
      */
-    fun stopAndAdd(a: Command): TrajectoryCommandBuilder {
+    fun stopAndAdd(command: Command): TrajectoryCommandBuilder {
         val b = endTrajectory()
         return TrajectoryCommandBuilder(b, b.tb, b.n, b.lastPoseUnmapped, b.lastPose, b.lastTangent, b.ms) { tail ->
-            b.cont(seqCons(a, tail))
+            b.cont(seqCons(command, tail))
         }
     }
     fun stopAndAdd(f: Runnable) = stopAndAdd(InstantCommand("StopAndAdd", f))
@@ -189,33 +191,42 @@ class TrajectoryCommandBuilder private constructor(
     }
 
     /**
-     * Schedules action [a] to execute in parallel starting at a displacement [ds] after the last trajectory segment.
-     * The action start is clamped to the span of the current trajectory.
+     * Waits for the duration of [t].
+     */
+    fun waitSeconds(t: Duration): TrajectoryCommandBuilder {
+        require(t.isPositive()) { "Time ($t) must be non-negative" }
+
+        return stopAndAdd(Delay(t))
+    }
+
+    /**
+     * Schedules command [command] to execute in parallel starting at a displacement [disp] after the last trajectory segment.
+     * The command start is clamped to the span of the current trajectory.
      *
      * Cannot be called without an applicable pending trajectory.
      */
     // TODO: Should calling this without an applicable trajectory implicitly begin an empty trajectory and execute the
     // action immediately?
-    fun afterDisp(ds: Double, a: Command): TrajectoryCommandBuilder {
-        require(ds >= 0.0) { "Displacement ($ds) must be non-negative" }
+    fun afterDisplacement(disp: Double, command: Command): TrajectoryCommandBuilder {
+        require(disp >= 0.0) { "Displacement ($disp) must be non-negative" }
 
         return TrajectoryCommandBuilder(
             this, tb, n, lastPoseUnmapped, lastPose, lastTangent,
-            ms + listOf(DispMarkerFactory(n, ds, a)), cont
+            ms + listOf(DispMarkerFactory(n, disp, command)), cont
         )
     }
-    fun afterDisp(ds: Double, f: Runnable) = afterDisp(ds, InstantCommand("DispMarker", f))
+    fun afterDisplacement(disp: Double, f: Runnable) = afterDisplacement(disp, InstantCommand("DispMarker", f))
 
     /**
-     * Schedules action [a] to execute in parallel starting [dt] seconds after the last trajectory segment, turn, or
+     * Schedules command [command] to execute in parallel starting [duration] seconds after the last trajectory segment, turn, or
      * other action.
      */
-    fun afterTime(dt: Double, a: Command): TrajectoryCommandBuilder {
-        require(dt >= 0.0) { "Time ($dt) must be non-negative" }
+    fun afterTime(duration: Double, command: Command): TrajectoryCommandBuilder {
+        require(duration >= 0.0) { "Time ($duration) must be non-negative" }
 
         return if (n == 0) {
             TrajectoryCommandBuilder(this, tb, 0, lastPoseUnmapped, lastPose, lastTangent, emptyList()) { tail ->
-                val m = seqCons(Delay(dt), a)
+                val m = seqCons(Delay(duration), command)
                 if (tail is NullCommand) {
                     cont(m)
                 } else {
@@ -225,11 +236,19 @@ class TrajectoryCommandBuilder private constructor(
         } else {
             TrajectoryCommandBuilder(
                 this, tb, n, lastPoseUnmapped, lastPose, lastTangent,
-                ms + listOf(TimeMarkerFactory(n, dt, a)), cont
+                ms + listOf(TimeMarkerFactory(n, duration, command)), cont
             )
         }
     }
-    fun afterTime(dt: Double, f: Runnable) = afterTime(dt, InstantCommand("TimeMarker", f))
+    fun afterTime(duration: Double, f: Runnable) = afterTime(duration, InstantCommand("TimeMarker", f))
+
+
+    /**
+     * Schedules command [command] to execute in parallel starting [duration] after the last trajectory segment, turn, or
+     * other action.
+     */
+    fun afterTime(duration: Duration, command: Command) = afterTime(duration.toDouble(DurationUnit.SECONDS), command)
+    fun afterTime(duration: Duration, f: Runnable) = afterTime(duration, InstantCommand("TimeMarker", f))
 
     fun setTangent(r: Rotation2d) =
         TrajectoryCommandBuilder(this, tb.setTangent(r), n, lastPoseUnmapped, lastPose, lastTangent, ms, cont)
@@ -640,6 +659,11 @@ class TrajectoryCommandBuilder private constructor(
         ).setTangent(it.lastTangent)
     }
 
+    /**
+     * Returns the built command.
+     * This command is not a [FollowTrajectory],
+     * but a [ParallelGroup] of [FollowTrajectory]s.
+     */
     fun build(): Command {
         return endTrajectory().cont(NullCommand())
     }

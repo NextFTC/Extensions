@@ -1,5 +1,3 @@
-@file:JvmName("Commands")
-
 package dev.nextftc.extensions.roadrunner
 
 import com.acmerobotics.roadrunner.TimeTrajectory
@@ -9,11 +7,15 @@ import dev.nextftc.core.commands.delays.Delay
 import dev.nextftc.core.commands.groups.SequentialGroup
 import dev.nextftc.core.commands.utility.NullCommand
 
-internal fun seqCons(hd: Command, tl: Command): Command =
-    when (tl) {
-        is NullCommand -> hd
-        is SequentialGroup -> SequentialGroup(*(arrayOf(hd) + tl.commands))
-        else -> SequentialGroup(hd, tl)
+/**
+ * Utility functions for constructing trajectories and turns;
+ * the name [seqCons] refers to the "cons" operation in functional programming.
+ */
+internal fun seqCons(head: Command, tail: Command): Command =
+    when (tail) {
+        is NullCommand -> head
+        is SequentialGroup -> SequentialGroup(*(arrayOf(head) + tail.commands))
+        else -> SequentialGroup(head, tail)
     }
 
 internal sealed class MarkerFactory(
@@ -33,10 +35,10 @@ internal class DispMarkerFactory(segmentIndex: Int, val ds: Double, val a: Comma
 }
 
 fun interface TurnCommandFactory {
-    fun make(t: TimeTurn): Command
+    fun make(turn: TimeTurn): Command
 }
 
 fun interface TrajectoryCommandFactory {
-    fun make(t: TimeTrajectory): Command
+    fun make(trajectory: TimeTrajectory): Command
 }
 

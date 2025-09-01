@@ -3,13 +3,12 @@ package dev.nextftc.extensions.roadrunner
 import com.acmerobotics.roadrunner.Pose2dDual
 import com.acmerobotics.roadrunner.PoseVelocity2d
 import com.acmerobotics.roadrunner.Time
-import com.acmerobotics.roadrunner.TimeTrajectory
 import com.acmerobotics.roadrunner.TimeTurn
 import com.acmerobotics.roadrunner.Vector2d
 import com.qualcomm.robotcore.util.ElapsedTime
 import dev.nextftc.core.commands.Command
 
-class FollowTurnCommand(private val mecanumDrive: NextFtcMecanumDrive, private val turn: TimeTurn) : Command() {
+class Turn(private val mecanumDrive: NextFTCMecanumDrive, private val turn: TimeTurn) : Command() {
     val timer = ElapsedTime()
 
     override val isDone: Boolean

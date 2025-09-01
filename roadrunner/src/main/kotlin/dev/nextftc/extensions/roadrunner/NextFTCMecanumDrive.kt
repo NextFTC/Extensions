@@ -9,7 +9,7 @@ import com.acmerobotics.roadrunner.Time
 /**
  * Represents a RoadRunner Mecanum drivetrain from the QuickStart.
  */
-abstract class NextFtcMecanumDrive {
+abstract class NextFTCMecanumDrive {
     abstract val controller: HolonomicController
 
     abstract fun getPose(): Pose2d
