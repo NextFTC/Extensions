@@ -32,10 +32,11 @@ dependencies {
     compileOnly(libs.bundles.ftc)
 }
 
+version = property("versions.pedro") as String
 description =
-    "The hardware library for NextFTC, a user-friendly library for FTC. Includes hardware interfaces, wrapper implementations, and hardware commands."
+    "NextFTC's extension to add support for Pedro Pathing."
 
 nextFTCPublishing {
-    displayName = "NextFTC Hardware"
+    displayName = "NextFTC Extensions - Pedro"
     logoPath = "../assets/logo-icon.svg"
 }
