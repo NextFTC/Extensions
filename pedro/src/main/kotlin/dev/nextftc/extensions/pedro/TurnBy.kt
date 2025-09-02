@@ -5,7 +5,7 @@ import dev.nextftc.core.units.Angle
 import dev.nextftc.core.units.abs
 import dev.nextftc.extensions.pedro.PedroComponent.Companion.follower
 
-class Turn(private val angle: Angle) : Command() {
+class TurnBy(private val angle: Angle) : Command() {
 
     init {
         named("Turn($angle)")
