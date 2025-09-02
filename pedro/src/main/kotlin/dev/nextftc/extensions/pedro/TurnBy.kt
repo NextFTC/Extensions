@@ -8,7 +8,7 @@ import dev.nextftc.extensions.pedro.PedroComponent.Companion.follower
 class TurnBy(private val angle: Angle) : Command() {
 
     init {
-        named("Turn($angle)")
+        named("TurnBy($angle)")
     }
 
     override val isDone: Boolean
