@@ -9,6 +9,10 @@ import com.qualcomm.robotcore.util.ElapsedTime
 import dev.nextftc.core.commands.Command
 
 class Turn(private val mecanumDrive: NextFTCMecanumDrive, private val turn: TimeTurn) : Command() {
+    init {
+        named("Angle(${turn.angle}")
+    }
+
     val timer = ElapsedTime()
 
     override val isDone: Boolean
