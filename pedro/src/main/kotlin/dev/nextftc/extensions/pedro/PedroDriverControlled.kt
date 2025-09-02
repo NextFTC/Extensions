@@ -1,6 +1,6 @@
 package dev.nextftc.extensions.pedro
 
-import dev.nextftc.extensions.pedro.PedroComponent.follower
+import dev.nextftc.extensions.pedro.PedroComponent.Companion.follower
 import dev.nextftc.hardware.driving.DriverControlledCommand
 import java.util.function.Supplier
 
