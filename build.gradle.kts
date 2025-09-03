@@ -12,7 +12,6 @@ plugins {
 }
 
 allprojects {
-    version = property("version") as String
     group = "dev.nextftc.extensions"
 }
 
