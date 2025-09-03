@@ -15,8 +15,9 @@ dependencyResolutionManagement {
         mavenCentral()
         maven("https://central.sonatype.com/repository/maven-snapshots/")
         maven("https://maven.pedropathing.com/")
+        maven("https://maven.brott.dev/")
     }
 }
 
 rootProject.name = "Extensions"
-include(":pedro")
+include(":pedro", ":roadrunner")

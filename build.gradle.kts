@@ -1,4 +1,5 @@
 import io.deepmedia.tools.deployer.DeployerExtension
+import org.gradle.kotlin.dsl.assign
 import org.gradle.kotlin.dsl.configure
 
 plugins {
