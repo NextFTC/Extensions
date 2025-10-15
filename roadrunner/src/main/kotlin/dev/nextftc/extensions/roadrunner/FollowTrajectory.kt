@@ -42,6 +42,6 @@ class FollowTrajectory(private val mecanumDrive: NextFTCMecanumDrive, private va
     }
 
     override fun stop(interrupted: Boolean) {
-        mecanumDrive.setDrivePowersFF(PoseVelocity2d(Vector2d(0.0, 0.0), 0.0))
+        mecanumDrive.setDrivePowers(PoseVelocity2d(Vector2d(0.0, 0.0), 0.0))
     }
 }

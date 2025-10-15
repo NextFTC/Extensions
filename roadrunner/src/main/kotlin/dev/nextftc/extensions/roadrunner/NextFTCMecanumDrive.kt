@@ -19,6 +19,8 @@ abstract class NextFTCMecanumDrive {
     open fun setDrivePowersFF(powers: PoseVelocity2d) =
         setDrivePowersFF(PoseVelocity2dDual.constant(powers, 1))
 
+    abstract fun setDrivePowers(powers: PoseVelocity2d)
+
     abstract fun updatePoseEstimate(): PoseVelocity2d
 
     abstract fun commandBuilder(beginPose: Pose2d): TrajectoryCommandBuilder

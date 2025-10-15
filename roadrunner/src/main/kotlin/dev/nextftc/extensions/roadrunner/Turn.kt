@@ -34,6 +34,6 @@ class Turn(private val mecanumDrive: NextFTCMecanumDrive, private val turn: Time
     }
 
     override fun stop(interrupted: Boolean) {
-        mecanumDrive.setDrivePowersFF(PoseVelocity2d(Vector2d(0.0, 0.0), 0.0))
+        mecanumDrive.setDrivePowers(PoseVelocity2d(Vector2d(0.0, 0.0), 0.0))
     }
 }
