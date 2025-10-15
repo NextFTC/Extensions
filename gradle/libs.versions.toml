@@ -1,7 +1,7 @@
 [versions]
 kotlin = "2.0.0"
 android = "8.7.3"
-nextftc = "1.0.0-beta.2"
+nextftc = "1.0.0"
 kotest = "5.9.1"
 ftc = "10.3.0"
 pedro = "2.0.0"
