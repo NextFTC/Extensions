@@ -7,12 +7,14 @@ ftc = "10.3.0"
 pedro = "2.0.0"
 rr-core = "1.0.1"
 rr-ftc = "0.1.25"
+fateweaver = "0.3.3"
 
 [libraries]
 kotest-runner = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 kotest-assertations = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
 kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
 mockk = { module = "io.mockk:mockk", version = "1.14.2" } # if needed
+fateweaver = { module = "gay.zharel.fateweaver:ftc", version.ref = "fateweaver" }
 functional-interfaces = { module = "dev.nextftc:functional-interfaces", version = "1.0.1" } # if needed
 ftc-robot-core = { group = "org.firstinspires.ftc", name = "RobotCore", version.ref = "ftc" }
 ftc-hardware = { group = "org.firstinspires.ftc", name = "Hardware", version.ref = "ftc" }
