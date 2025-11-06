@@ -20,4 +20,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Extensions"
-include(":pedro", ":roadrunner")
+include(":pedro", ":roadrunner", ":fateweaver")
