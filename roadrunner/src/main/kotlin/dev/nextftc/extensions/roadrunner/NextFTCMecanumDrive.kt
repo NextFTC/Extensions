@@ -44,13 +44,16 @@ abstract class NextFTCMecanumDrive {
         yPower: Supplier<Double>,
         headingPower: Supplier<Double>,
         robotCentric: Boolean = true
-    ) = LambdaCommand().setUpdate {
-        var transVel = Vector2d(xPower.get(), yPower.get())
+    ) = LambdaCommand()
+        .setUpdate {
+            var transVel = Vector2d(xPower.get(), yPower.get())
 
-        if (!robotCentric) {
-            transVel = getPose().heading * transVel
-        }
+            if (!robotCentric) {
+                transVel = getPose().heading * transVel
+            }
 
-        setDrivePowers(PoseVelocity2d(transVel, headingPower.get()))
-    }
+            setDrivePowers(PoseVelocity2d(transVel, headingPower.get()))
+        }.setIsDone { false }
+        .requires(this)
+        .named("RoadRunner Driver Controlled")
 }
